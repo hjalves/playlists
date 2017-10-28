@@ -32,7 +32,7 @@ with urlopen(request) as response:
 songs = [(track['track_title'], track['album_title'], track['artist_name'])
          for track in data['aTracks']]
 
-Song.objects.bulk_create(Song(title=title, album=album, artist=artist)
+Song.objects.bulk_create(Song(title=title, album=album or '', artist=artist)
                          for title, album, artist in songs)
 
 # ----------------------
