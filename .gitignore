@@ -110,3 +110,6 @@ venv.bak/
 
 # PyCharm
 .idea/
+
+# Vagrant
+.vagrant/
