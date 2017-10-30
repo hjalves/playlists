@@ -4,9 +4,21 @@
 
 Web application to manage users and their favorite songs.
 
+## TODO
+
+This README is a work in progress. Sections missing:
+- Features
+- Architecture and dependencies
+- Configuration
+- Testing
+- Manual deployment
+- Changelog
+- License
+
 ## Development environment
 
-To run a development environment, install [Vagrant](https://www.vagrantup.com/),
+To setup a development environment, clone the repository,
+install [Vagrant](https://www.vagrantup.com/),
 and run `vagrant up`, at the project root directory.
 
 The default Vagrant setup installs a PostgreSQL server with a sample database
@@ -16,12 +28,22 @@ the forwarded port `host: 5432` in `Vagrantfile`, or remove it altogether.
 
 After the VM is up and running, connect it with `vagrant ssh` and:
 
-- `./run-server.sh`: to run the Django development server
+- `~/run-server.sh`: to run the Django development server at port 8080
 - `/vagrant/manage.py` to perform other management activities.
 
 A Python virtual environment (located at `~/venv`), with the project
 dependencies installed, is automatically activated as soon as you connect
-via ssh (via `.bashrc`).
+via ssh (via `.bashrc`). If you prefer to run the development server locally,
+install Python 3.4+ (and virtualenv) and execute:
+
+```bash
+virtualenv -ppython3 venv       # Create a virtual environment named 'venv'
+source venv/bin/activate        # Activate the virtual environment
+pip install -r requirements     # Install the project dependencies
+./manage.py migrate             # Perform database migrations
+./scripts/populate_db.py        # Insert test data in the database
+./manage.py runserver           # Run the development server (port 8000)
+```
 
 ## RESTful API
 
@@ -67,9 +89,14 @@ To deploy files staged in git, use `eb deploy --staged`.
 
 ## Frontend
 
-### Development
+The frontend is built with [React](https://reactjs.org/). To have a working
+development environment and to build the production version 
+you need [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/).
 
-Run `npm install` while in `playlists_frontend/` dir.
+### Development environment
+
+- Run `npm install` while in `playlists_frontend/` dir to install the dependencies.
+- `npm start` starts a development server
 
 ### Deployment
 
