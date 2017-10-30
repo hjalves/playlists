@@ -8,13 +8,18 @@ export DEBIAN_FRONTEND=noninteractive
 
 # Update repos and system
 apt-get update
-apt-get -y upgrade
 
-# Install Python and build (development) tools
-apt-get install -y build-essential python3-dev virtualenv
+# Upgrade system (not really a good idea, as ubuntu/xenial64 is already updated)
+# apt-get -y upgrade
+
+# Install Python 3 and virtualenv
+apt-get install -y python3 virtualenv
 
 # Install PostgreSQL
-apt-get install -y postgresql postgresql-contrib libpq-dev
+apt-get install -y postgresql postgresql-contrib
+
+# Install development tools (if for some reason, pip cannot install wheels)
+# apt-get install -y build-essential python3-dev libpq-dev
 
 # ----------------
 # PostgreSQL Setup
