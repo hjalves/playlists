@@ -1,0 +1,85 @@
+# YAML
+
+name: Users
+
+config:
+  !include conftest.yaml
+
+tests:
+  - name: List users
+    url: /users/
+    method: GET
+    execute: raise_for_status()
+
+  - name: List users with pagination
+    url: /users/
+    method: GET
+    params:
+      limit: 5
+      offset: 10
+
+  - name: Add an user
+    url: /users/
+    method: POST
+    params:
+      email: name@domain.pt
+      full_name: Full Name
+    execute: raise_for_status()
+
+  - name: View user details
+    url: /users/:user_id/
+    method: GET
+    url-vars:
+      user_id: 1
+    execute: raise_for_status()
+
+  - name: Edit user
+    url: /users/:user_id/
+    method: PUT
+    url-vars:
+      user_id: 1
+    params:
+      email: newemail@domain.pt
+      full_name: New name
+    execute: raise_for_status()
+
+  - name: Partially edit user
+    url: /users/:user_id/
+    method: PATCH
+    url-vars:
+      user_id: 1
+    params:
+      full_name: New name B
+    execute: raise_for_status()
+
+  - name: Delete user
+    url: /users/:user_id/
+    method: DELETE
+    url-vars:
+      user_id: 1
+    execute: raise_for_status()
+
+  - name: Get user's favorite songs
+    url: /users/:user_id/songs/
+    method: GET
+    url-vars:
+      user_id: 2
+    execute: raise_for_status()
+
+  - name: Add favorite songs to an user
+    url: /users/:user_id/songs/
+    method: POST
+    url-vars:
+      user_id: 2
+    params:
+      ids: [2, 3, 4]
+    execute: raise_for_status()
+
+  - name: Remove favorite songs from an user
+    url: /users/:user_id/songs/
+    method: DELETE
+    url-vars:
+      user_id: 2
+    params:
+      ids: [2, 3]
+    execute: raise_for_status()

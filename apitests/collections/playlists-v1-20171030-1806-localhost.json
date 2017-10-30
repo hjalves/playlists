@@ -1,0 +1,240 @@
+{
+    "id": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+    "name": "Playlists API v1 (localhost:8000)",
+    "order": [],
+    "folders": [
+        {
+            "id": "6493a43b-f501-4d3a-b2f3-6df2067c2485",
+            "name": "Users",
+            "order": [
+                "eebeaaff-3302-4fa3-8184-75380078cfd0",
+                "19151221-24c2-486b-9752-1143eb43e589",
+                "efe4244b-9bc2-4114-a88f-cc531b7c75b0",
+                "ad4ed7a5-50ab-4689-8a62-12c44e297831",
+                "2da77850-707f-4482-8751-28eca32dfa27",
+                "d04d03cf-855d-485f-95b6-ff55b01ab475",
+                "83847518-d469-42cc-9a72-5b5ca60195a3",
+                "1b1ff671-0af6-4d10-8afd-71b0f8866265",
+                "e414262b-682b-47dd-b3d8-11b4ffe732e2",
+                "b140abf1-632e-480e-80fe-1a0ceb6ade9f"
+            ]
+        },
+        {
+            "id": "af9b01c6-56e8-4773-9bb3-0389e3e7c588",
+            "name": "Songs",
+            "order": [
+                "a3d899ec-4d39-4877-be63-d86e3113d6e7",
+                "7e06f0ef-074d-4b55-b26e-486db61a4077",
+                "e5393e72-9493-46f0-820a-8a59fc46d29f",
+                "6e457711-790e-461f-899f-290bc16799d8",
+                "8f72355e-e949-42a4-bd0d-dfb00f33480f",
+                "8f1d153b-7ad4-4bcc-8f37-5c607e2b955f",
+                "bb253753-6a91-41f3-9708-576032a7ca37"
+            ]
+        }
+    ],
+    "requests": [
+        {
+            "id": "19151221-24c2-486b-9752-1143eb43e589",
+            "name": "List users with pagination",
+            "url": "http://localhost:8000/api/v1/users/?limit=5&offset=10",
+            "method": "GET",
+            "headers": "",
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "6493a43b-f501-4d3a-b2f3-6df2067c2485"
+        },
+        {
+            "id": "1b1ff671-0af6-4d10-8afd-71b0f8866265",
+            "name": "Get user's favorite songs",
+            "url": "http://localhost:8000/api/v1/users/:user_id/songs/",
+            "method": "GET",
+            "headers": "",
+            "pathVariables": {
+                "user_id": 2
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "6493a43b-f501-4d3a-b2f3-6df2067c2485"
+        },
+        {
+            "id": "2da77850-707f-4482-8751-28eca32dfa27",
+            "name": "Edit user",
+            "url": "http://localhost:8000/api/v1/users/:user_id/",
+            "method": "PUT",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"email\": \"newemail@domain.pt\",\n    \"full_name\": \"New name\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "user_id": 1
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "6493a43b-f501-4d3a-b2f3-6df2067c2485"
+        },
+        {
+            "id": "6e457711-790e-461f-899f-290bc16799d8",
+            "name": "View song details",
+            "url": "http://localhost:8000/api/v1/songs/:song_id/",
+            "method": "GET",
+            "headers": "",
+            "pathVariables": {
+                "song_id": 1
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "af9b01c6-56e8-4773-9bb3-0389e3e7c588"
+        },
+        {
+            "id": "7e06f0ef-074d-4b55-b26e-486db61a4077",
+            "name": "List songs with pagination",
+            "url": "http://localhost:8000/api/v1/songs/?limit=5&offset=10",
+            "method": "GET",
+            "headers": "",
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "af9b01c6-56e8-4773-9bb3-0389e3e7c588"
+        },
+        {
+            "id": "83847518-d469-42cc-9a72-5b5ca60195a3",
+            "name": "Delete user",
+            "url": "http://localhost:8000/api/v1/users/:user_id/",
+            "method": "DELETE",
+            "headers": "",
+            "pathVariables": {
+                "user_id": 1
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "6493a43b-f501-4d3a-b2f3-6df2067c2485"
+        },
+        {
+            "id": "8f1d153b-7ad4-4bcc-8f37-5c607e2b955f",
+            "name": "Partially edit song",
+            "url": "http://localhost:8000/api/v1/songs/:song_id/",
+            "method": "PATCH",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"title\": \"New title B\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "song_id": 1
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "af9b01c6-56e8-4773-9bb3-0389e3e7c588"
+        },
+        {
+            "id": "8f72355e-e949-42a4-bd0d-dfb00f33480f",
+            "name": "Edit song",
+            "url": "http://localhost:8000/api/v1/songs/:song_id/",
+            "method": "PUT",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"title\": \"New title\",\n    \"artist\": \"New artist\",\n    \"album\": \"New album\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "song_id": 1
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "af9b01c6-56e8-4773-9bb3-0389e3e7c588"
+        },
+        {
+            "id": "a3d899ec-4d39-4877-be63-d86e3113d6e7",
+            "name": "List songs",
+            "url": "http://localhost:8000/api/v1/songs/",
+            "method": "GET",
+            "headers": "",
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "af9b01c6-56e8-4773-9bb3-0389e3e7c588"
+        },
+        {
+            "id": "ad4ed7a5-50ab-4689-8a62-12c44e297831",
+            "name": "View user details",
+            "url": "http://localhost:8000/api/v1/users/:user_id/",
+            "method": "GET",
+            "headers": "",
+            "pathVariables": {
+                "user_id": 1
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "6493a43b-f501-4d3a-b2f3-6df2067c2485"
+        },
+        {
+            "id": "b140abf1-632e-480e-80fe-1a0ceb6ade9f",
+            "name": "Remove favorite songs from an user",
+            "url": "http://localhost:8000/api/v1/users/:user_id/songs/",
+            "method": "DELETE",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"ids\": [\n        2,\n        3\n    ]\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "user_id": 2
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "6493a43b-f501-4d3a-b2f3-6df2067c2485"
+        },
+        {
+            "id": "bb253753-6a91-41f3-9708-576032a7ca37",
+            "name": "Delete song",
+            "url": "http://localhost:8000/api/v1/songs/:song_id/",
+            "method": "DELETE",
+            "headers": "",
+            "pathVariables": {
+                "song_id": 1
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "af9b01c6-56e8-4773-9bb3-0389e3e7c588"
+        },
+        {
+            "id": "d04d03cf-855d-485f-95b6-ff55b01ab475",
+            "name": "Partially edit user",
+            "url": "http://localhost:8000/api/v1/users/:user_id/",
+            "method": "PATCH",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"full_name\": \"New name B\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "user_id": 1
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "6493a43b-f501-4d3a-b2f3-6df2067c2485"
+        },
+        {
+            "id": "e414262b-682b-47dd-b3d8-11b4ffe732e2",
+            "name": "Add favorite songs to an user",
+            "url": "http://localhost:8000/api/v1/users/:user_id/songs/",
+            "method": "POST",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"ids\": [\n        2,\n        3,\n        4\n    ]\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "user_id": 2
+            },
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "6493a43b-f501-4d3a-b2f3-6df2067c2485"
+        },
+        {
+            "id": "e5393e72-9493-46f0-820a-8a59fc46d29f",
+            "name": "Add a song",
+            "url": "http://localhost:8000/api/v1/songs/",
+            "method": "POST",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"title\": \"Title\",\n    \"artist\": \"Artist\",\n    \"album\": \"Album\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "af9b01c6-56e8-4773-9bb3-0389e3e7c588"
+        },
+        {
+            "id": "eebeaaff-3302-4fa3-8184-75380078cfd0",
+            "name": "List users",
+            "url": "http://localhost:8000/api/v1/users/",
+            "method": "GET",
+            "headers": "",
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "6493a43b-f501-4d3a-b2f3-6df2067c2485"
+        },
+        {
+            "id": "efe4244b-9bc2-4114-a88f-cc531b7c75b0",
+            "name": "Add an user",
+            "url": "http://localhost:8000/api/v1/users/",
+            "method": "POST",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"email\": \"name@domain.pt\",\n    \"full_name\": \"Full Name\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "collectionId": "1f4d4969-053d-43d0-8d35-e76fbace3c9e",
+            "folder": "6493a43b-f501-4d3a-b2f3-6df2067c2485"
+        }
+    ]
+}

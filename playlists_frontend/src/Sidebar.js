@@ -32,6 +32,10 @@ const Sidebar = () => (
           <FontAwesome name="book" fixedWidth />{' '}
           API Doc
         </NavLink>
+        <NavLink href="/playlists_api_v1.postman_collection.json" target="_blank">
+          <FontAwesome name="folder" fixedWidth />{' '}
+          Postman
+        </NavLink>
         <NavLink href="https://github.com/hjalves/playlists" target="_blank">
           <FontAwesome name="github" fixedWidth />{' '}
           GitHub

@@ -1,0 +1,62 @@
+# YAML
+
+name: Songs
+
+config:
+  !include conftest.yaml
+
+tests:
+  - name: List songs
+    url: /songs/
+    method: GET
+    execute: raise_for_status()
+
+  - name: List songs with pagination
+    url: /songs/
+    method: GET
+    params:
+      limit: 5
+      offset: 10
+
+  - name: Add a song
+    url: /songs/
+    method: POST
+    params:
+      title: Title
+      artist: Artist
+      album: Album
+    execute: raise_for_status()
+
+  - name: View song details
+    url: /songs/:song_id/
+    method: GET
+    url-vars:
+      song_id: 1
+    execute: raise_for_status()
+
+  - name: Edit song
+    url: /songs/:song_id/
+    method: PUT
+    url-vars:
+      song_id: 1
+    params:
+      title: New title
+      artist: New artist
+      album: New album
+    execute: raise_for_status()
+
+  - name: Partially edit song
+    url: /songs/:song_id/
+    method: PATCH
+    url-vars:
+      song_id: 1
+    params:
+      title: New title B
+    execute: raise_for_status()
+
+  - name: Delete song
+    url: /songs/:song_id/
+    method: DELETE
+    url-vars:
+      song_id: 1
+    execute: raise_for_status()

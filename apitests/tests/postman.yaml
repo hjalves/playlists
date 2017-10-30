@@ -1,0 +1,10 @@
+
+# Collection name
+name: Playlists API v1
+
+# Body data format: form or json
+data-format: json
+
+folders:
+  - !include test_songs.yaml
+  - !include test_users.yaml

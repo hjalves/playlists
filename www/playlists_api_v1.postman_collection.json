@@ -1,0 +1,240 @@
+{
+    "id": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+    "name": "Playlists API v1 (playlists.xor.pt)",
+    "order": [],
+    "folders": [
+        {
+            "id": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2",
+            "name": "Users",
+            "order": [
+                "af0ebe1a-6e32-4594-beb6-4c6c380edb26",
+                "770bc553-540d-4c9d-91e7-644a9415f871",
+                "62b9a4a7-94e5-412d-9612-8b7cfe0b4a21",
+                "8edcce79-2898-4ec4-a58e-36b9f5ee83e8",
+                "4adc3883-a597-48fc-98a4-11fc8d67dd4c",
+                "29da6aa1-67e6-4a7f-9e6a-f14cd5ffb26a",
+                "8751e2ec-4577-45a6-aff4-99f9bc4607b0",
+                "be1f5522-ea7e-4bd6-8c88-e63e277bcbdc",
+                "0bcb36b0-b231-47b9-9ea1-c56d924a4cba",
+                "633f863a-d3c8-4e40-8295-ff2a00e37405"
+            ]
+        },
+        {
+            "id": "10e56e4e-ccc9-47d7-bad8-ab9588b34212",
+            "name": "Songs",
+            "order": [
+                "30bfb0c9-4c02-4bdd-974c-b498e8376848",
+                "962d1e85-ed28-466a-8455-450a3a1b9909",
+                "6ebbed37-6747-49dd-8d68-704a284b5c31",
+                "cf9514c2-44c3-4c06-9b75-ae0cddd6e946",
+                "1891b781-b939-4625-b603-1cf9f48d0182",
+                "be84ab84-f3c0-4fc3-84a4-814de162100b",
+                "51db81e2-0282-4ee6-b2a0-c76f74366233"
+            ]
+        }
+    ],
+    "requests": [
+        {
+            "id": "0bcb36b0-b231-47b9-9ea1-c56d924a4cba",
+            "name": "Add favorite songs to an user",
+            "url": "https://playlists.xor.pt/api/v1/users/:user_id/songs/",
+            "method": "POST",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"ids\": [\n        2,\n        3,\n        4\n    ]\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "user_id": 2
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2"
+        },
+        {
+            "id": "1891b781-b939-4625-b603-1cf9f48d0182",
+            "name": "Edit song",
+            "url": "https://playlists.xor.pt/api/v1/songs/:song_id/",
+            "method": "PUT",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"title\": \"New title\",\n    \"artist\": \"New artist\",\n    \"album\": \"New album\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "song_id": 1
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "10e56e4e-ccc9-47d7-bad8-ab9588b34212"
+        },
+        {
+            "id": "29da6aa1-67e6-4a7f-9e6a-f14cd5ffb26a",
+            "name": "Partially edit user",
+            "url": "https://playlists.xor.pt/api/v1/users/:user_id/",
+            "method": "PATCH",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"full_name\": \"New name B\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "user_id": 1
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2"
+        },
+        {
+            "id": "30bfb0c9-4c02-4bdd-974c-b498e8376848",
+            "name": "List songs",
+            "url": "https://playlists.xor.pt/api/v1/songs/",
+            "method": "GET",
+            "headers": "",
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "10e56e4e-ccc9-47d7-bad8-ab9588b34212"
+        },
+        {
+            "id": "4adc3883-a597-48fc-98a4-11fc8d67dd4c",
+            "name": "Edit user",
+            "url": "https://playlists.xor.pt/api/v1/users/:user_id/",
+            "method": "PUT",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"email\": \"newemail@domain.pt\",\n    \"full_name\": \"New name\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "user_id": 1
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2"
+        },
+        {
+            "id": "51db81e2-0282-4ee6-b2a0-c76f74366233",
+            "name": "Delete song",
+            "url": "https://playlists.xor.pt/api/v1/songs/:song_id/",
+            "method": "DELETE",
+            "headers": "",
+            "pathVariables": {
+                "song_id": 1
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "10e56e4e-ccc9-47d7-bad8-ab9588b34212"
+        },
+        {
+            "id": "62b9a4a7-94e5-412d-9612-8b7cfe0b4a21",
+            "name": "Add an user",
+            "url": "https://playlists.xor.pt/api/v1/users/",
+            "method": "POST",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"email\": \"name@domain.pt\",\n    \"full_name\": \"Full Name\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2"
+        },
+        {
+            "id": "633f863a-d3c8-4e40-8295-ff2a00e37405",
+            "name": "Remove favorite songs from an user",
+            "url": "https://playlists.xor.pt/api/v1/users/:user_id/songs/",
+            "method": "DELETE",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"ids\": [\n        2,\n        3\n    ]\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "user_id": 2
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2"
+        },
+        {
+            "id": "6ebbed37-6747-49dd-8d68-704a284b5c31",
+            "name": "Add a song",
+            "url": "https://playlists.xor.pt/api/v1/songs/",
+            "method": "POST",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"title\": \"Title\",\n    \"artist\": \"Artist\",\n    \"album\": \"Album\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "10e56e4e-ccc9-47d7-bad8-ab9588b34212"
+        },
+        {
+            "id": "770bc553-540d-4c9d-91e7-644a9415f871",
+            "name": "List users with pagination",
+            "url": "https://playlists.xor.pt/api/v1/users/?limit=5&offset=10",
+            "method": "GET",
+            "headers": "",
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2"
+        },
+        {
+            "id": "8751e2ec-4577-45a6-aff4-99f9bc4607b0",
+            "name": "Delete user",
+            "url": "https://playlists.xor.pt/api/v1/users/:user_id/",
+            "method": "DELETE",
+            "headers": "",
+            "pathVariables": {
+                "user_id": 1
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2"
+        },
+        {
+            "id": "8edcce79-2898-4ec4-a58e-36b9f5ee83e8",
+            "name": "View user details",
+            "url": "https://playlists.xor.pt/api/v1/users/:user_id/",
+            "method": "GET",
+            "headers": "",
+            "pathVariables": {
+                "user_id": 1
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2"
+        },
+        {
+            "id": "962d1e85-ed28-466a-8455-450a3a1b9909",
+            "name": "List songs with pagination",
+            "url": "https://playlists.xor.pt/api/v1/songs/?limit=5&offset=10",
+            "method": "GET",
+            "headers": "",
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "10e56e4e-ccc9-47d7-bad8-ab9588b34212"
+        },
+        {
+            "id": "af0ebe1a-6e32-4594-beb6-4c6c380edb26",
+            "name": "List users",
+            "url": "https://playlists.xor.pt/api/v1/users/",
+            "method": "GET",
+            "headers": "",
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2"
+        },
+        {
+            "id": "be1f5522-ea7e-4bd6-8c88-e63e277bcbdc",
+            "name": "Get user's favorite songs",
+            "url": "https://playlists.xor.pt/api/v1/users/:user_id/songs/",
+            "method": "GET",
+            "headers": "",
+            "pathVariables": {
+                "user_id": 2
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "01d46d43-6f7e-4d7a-8021-a730cb3c06a2"
+        },
+        {
+            "id": "be84ab84-f3c0-4fc3-84a4-814de162100b",
+            "name": "Partially edit song",
+            "url": "https://playlists.xor.pt/api/v1/songs/:song_id/",
+            "method": "PATCH",
+            "dataMode": "raw",
+            "rawModeData": "{\n    \"title\": \"New title B\"\n}",
+            "headers": "Content-Type: application/json\n",
+            "pathVariables": {
+                "song_id": 1
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "10e56e4e-ccc9-47d7-bad8-ab9588b34212"
+        },
+        {
+            "id": "cf9514c2-44c3-4c06-9b75-ae0cddd6e946",
+            "name": "View song details",
+            "url": "https://playlists.xor.pt/api/v1/songs/:song_id/",
+            "method": "GET",
+            "headers": "",
+            "pathVariables": {
+                "song_id": 1
+            },
+            "collectionId": "421a81dc-97f3-4646-bc2a-e7498eff2fbb",
+            "folder": "10e56e4e-ccc9-47d7-bad8-ab9588b34212"
+        }
+    ]
+}

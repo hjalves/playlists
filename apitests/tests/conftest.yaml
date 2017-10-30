@@ -1,0 +1,6 @@
+# YAML
+# API Tests configuration file
+
+base-url: http://localhost:8000/api/v1
+#authorization: Apikey f452e556-f5aa-4a56-b65d-730c8493de43
+post-body: json

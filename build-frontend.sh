@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # Cleanup
-rm -r www/*
+rm -r www/static/*
 
 # Build frontend
 cd playlists_frontend/

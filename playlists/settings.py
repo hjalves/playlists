@@ -26,6 +26,8 @@ SECRET_KEY = 's(2=%py8#lc@mam26g#uuo^ml_mz5z0ii(v5*^p2!iuk0*zuq9'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
     'playlists.eu-west-2.elasticbeanstalk.com',
     'playlists.ml',
     'playlists.xor.pt'
