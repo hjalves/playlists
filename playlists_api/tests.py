@@ -59,6 +59,20 @@ songs = [
 ]
 
 
+users = [
+    User(email='eramos@mail.pt', full_name='Emília Ramos'),
+    User(email='esousa@mail.pt', full_name='Enzo Sousa'),
+    User(email='alopes@mail.pt', full_name='Artur Lopes'),
+    User(email='gpires@mail.pt', full_name='Gabriel Pires'),
+    User(email='evieira@mail.pt', full_name='Eduarda Vieira'),
+    User(email='aandrade@mail.pt', full_name='Alícia Andrade'),
+    User(email='lcarneiro@mail.pt', full_name='Leonardo Carneiro'),
+    User(email='bazevedo@mail.pt', full_name='Bernardo Azevedo'),
+    User(email='iteixeira@mail.pt', full_name='Inês Teixeira'),
+    User(email='kcunha@mail.pt', full_name='Kyara Cunha')
+]
+
+
 class GetAllSongsTest(APITestCase):
 
     def setUp(self):
@@ -75,3 +89,20 @@ class GetAllSongsTest(APITestCase):
         self.assertEquals(results[0]['title'], 'Me And The Bean')
         self.assertEquals(results[0]['artist'], 'Spoon')
         self.assertEquals(results[0]['album'], 'Girls Can Tell')
+
+
+class GetAllUsersTest(APITestCase):
+
+    def setUp(self):
+        User.objects.bulk_create(users)
+
+    def test_get_all_users(self):
+        url = reverse('playlists_api:user-list')
+        # url = reverse('playlists_api:song-detail', args=[1])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 10)
+        results = response.data['results']
+        self.assertEqual(len(results), 10)
+        self.assertEquals(results[0]['email'], 'eramos@mail.pt')
+        self.assertEquals(results[0]['full_name'], 'Emília Ramos')
