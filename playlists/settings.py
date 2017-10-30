@@ -25,7 +25,11 @@ SECRET_KEY = 's(2=%py8#lc@mam26g#uuo^ml_mz5z0ii(v5*^p2!iuk0*zuq9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'playlists.eu-west-2.elasticbeanstalk.com',
+    'playlists.ml',
+    'playlists.xor.pt'
+]
 
 
 # Application definition
@@ -86,6 +90,19 @@ DATABASES = {
     }
 }
 
+# AWS Beanstalk
+
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -124,7 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, "www", "static")
 
 # Rest framework
 

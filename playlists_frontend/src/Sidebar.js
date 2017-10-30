@@ -28,7 +28,7 @@ const Sidebar = () => (
 
     <Nav vertical pills>
       <NavItem>
-        <NavLink href="#">
+        <NavLink href="/api/v1/" target="_blank">
           <FontAwesome name="book" fixedWidth />{' '}
           API Doc
         </NavLink>
