@@ -62,9 +62,9 @@ VENV_DIR="/home/ubuntu/venv"
 su - ubuntu -c "virtualenv -ppython3 $VENV_DIR"
 su - ubuntu -c "$VENV_DIR/bin/pip install -r /vagrant/requirements.txt"
 su - ubuntu -c "source $VENV_DIR/bin/activate && /vagrant/manage.py migrate"
+su - ubuntu -c "source $VENV_DIR/bin/activate && /vagrant/scripts/populate_db.py"
 
 echo "source $VENV_DIR/bin/activate" >> /home/ubuntu/.bashrc
-echo "Run server with: /vagrant/manage.py runserver 0.0.0.0:8080"
 
 # Create run-server.sh script
 
@@ -74,3 +74,14 @@ source $VENV_DIR/bin/activate
 python /vagrant/manage.py runserver 0.0.0.0:8080
 EOF
 chmod +x /home/ubuntu/run-server.sh
+
+echo "---------------------------------------------------------------"
+echo "Database Settings:"
+echo "\'NAME\': \'$APP_DB_NAME\'"
+echo "\'USER\': \'$APP_DB_USER\'"
+echo "\'PASSWORD\': \'$APP_DB_PASS\'"
+echo "\'HOST\': \'localhost\'"
+echo "\'PORT\': \'\'"
+echo "After connecting to machine: vagrant ssh"
+echo "...run server with: ./run-server.sh"
+echo "---------------------------------------------------------------"
