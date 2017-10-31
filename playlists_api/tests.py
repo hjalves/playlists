@@ -186,3 +186,38 @@ class UserSongsTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['ids'],
                         ['Could not find at least one of the given IDs'])
+
+    def test_replace_user_songs(self):
+        user = User.objects.get(email='eramos@mail.pt')
+        songs = Song.objects.filter(title__in=['Holiday In Cambodia',
+                                               'Bohemian Rhapsody - Remastered',
+                                               'Alex Chilton',
+                                               'Eye of the Tiger'])
+        song_ids = [song.id for song in songs]
+
+        url = reverse('playlists_api:user-songs', args=[user.id])
+        response = self.client.put(url, {'ids': song_ids}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        results = response.data
+        self.assertEqual(len(results), 4)
+        self.assertEqual(results[0]['title'], 'Eye of the Tiger')
+        self.assertEqual(results[1]['title'], 'Bohemian Rhapsody - Remastered')
+        self.assertEqual(results[2]['title'], 'Holiday In Cambodia')
+        self.assertEqual(results[3]['title'], 'Alex Chilton')
+        self.assertEquals(user.songs.count(), 4)
+
+    def test_replace_user_songs_nonexistent(self):
+        user = User.objects.get(email='eramos@mail.pt')
+        songs = Song.objects.filter(title__in=['Holiday In Cambodia',
+                                               'Bohemian Rhapsody - Remastered',
+                                               'Alex Chilton',
+                                               'Eye of the Tiger'])
+        song_ids = [song.id for song in songs]
+        song_ids.append(50)
+
+        url = reverse('playlists_api:user-songs', args=[user.id])
+        response = self.client.put(url, {'ids': song_ids}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['ids'],
+                        ['Could not find at least one of the given IDs'])
+
