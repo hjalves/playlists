@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 import Navigation from '../common/Navigation';
 import { Button, ButtonGroup, ListGroup, ListGroupItem, Card,
-  CardBody, CardFooter, CardHeader, Form, FormGroup, Label, Input
+  CardBody, CardFooter, CardHeader, Form, FormGroup, Label, Input,
+  Modal, ModalBody, ModalFooter, ModalHeader
 } from 'reactstrap';
 
 
@@ -17,6 +18,7 @@ class UserDetailsPage extends React.Component {
       user: null,
       editUser: null,
       editing: false,
+      deleteModal: false,
       favoriteSongs: null
     };
   }
@@ -77,6 +79,20 @@ class UserDetailsPage extends React.Component {
     );
   };
 
+  toggleDeleteModal = () => {
+    this.setState({deleteModal: !this.state.deleteModal});
+  };
+
+  handleDelete = () => {
+    const userId = this.props.match.params.id;
+    axios.delete(`/users/${userId}/`).then(
+      response => {
+        this.redirectTo('/users');
+      }
+    );
+
+  };
+
   renderShowUser() {
     return (
       <Card>
@@ -94,7 +110,7 @@ class UserDetailsPage extends React.Component {
           <Button color="outline-secondary" className="mr-2"
                   onClick={this.beginEditing}>
             <FontAwesome name="pencil"/> Change</Button>
-          <Button color="outline-danger">
+          <Button color="outline-danger" onClick={this.toggleDeleteModal}>
             <FontAwesome name="trash"/> Delete</Button>
         </CardFooter>
       </Card>
@@ -157,6 +173,23 @@ class UserDetailsPage extends React.Component {
     );
   };
 
+  renderDeleteModal() {
+    return (
+      <Modal isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} >
+        <ModalHeader toggle={this.toggleDeleteModal}>Delete User</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete this user?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={this.handleDelete}>
+            <FontAwesome name="check" /> Delete</Button>{' '}
+          <Button color="secondary" onClick={this.toggleDeleteModal}>
+            <FontAwesome name="times" /> Cancel</Button>
+        </ModalFooter>
+      </Modal>
+    );
+  }
+
   render() {
     if (this.state.redirectTo) {
       return (
@@ -173,6 +206,7 @@ class UserDetailsPage extends React.Component {
         </Navigation>
         {this.state.editing ? this.renderEditUser() : this.renderShowUser()}
         {this.renderFavoriteSongs()}
+        {this.renderDeleteModal()}
       </div>
     );
   }

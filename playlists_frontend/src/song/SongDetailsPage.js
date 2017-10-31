@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 import Navigation from '../common/Navigation';
 import { Button, ButtonGroup, ListGroup, ListGroupItem, Card,
-  CardBody, CardFooter, CardHeader, Form, FormGroup, Label, Input
+  CardBody, CardFooter, CardHeader, Form, FormGroup, Label, Input,
+  Modal, ModalBody, ModalFooter, ModalHeader
 } from 'reactstrap';
 
 
@@ -17,6 +18,7 @@ class SongDetailsPage extends React.Component {
       song: null,
       editSong: null,
       editing: false,
+      deleteModal: false,
     };
   }
 
@@ -63,6 +65,20 @@ class SongDetailsPage extends React.Component {
     );
   };
 
+  toggleDeleteModal = () => {
+    this.setState({deleteModal: !this.state.deleteModal});
+  };
+
+  handleDelete = () => {
+    const songId = this.props.match.params.id;
+    axios.delete(`/songs/${songId}/`).then(
+      response => {
+        this.redirectTo('/songs');
+      }
+    );
+
+  };
+
   renderShowSong() {
     return (
       <Card>
@@ -84,7 +100,7 @@ class SongDetailsPage extends React.Component {
           <Button color="outline-secondary" className="mr-2"
                   onClick={this.beginEditing}>
             <FontAwesome name="pencil"/> Change</Button>
-          <Button color="outline-danger">
+          <Button color="outline-danger" onClick={this.toggleDeleteModal}>
             <FontAwesome name="trash"/> Delete</Button>
         </CardFooter>
       </Card>
@@ -121,6 +137,23 @@ class SongDetailsPage extends React.Component {
     );
   }
 
+  renderDeleteModal() {
+    return (
+      <Modal isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} >
+        <ModalHeader toggle={this.toggleDeleteModal}>Delete Song</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete this song?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={this.handleDelete}>
+            <FontAwesome name="check" /> Delete</Button>{' '}
+          <Button color="secondary" onClick={this.toggleDeleteModal}>
+            <FontAwesome name="times" /> Cancel</Button>
+        </ModalFooter>
+      </Modal>
+    );
+  }
+
   render() {
     if (this.state.redirectTo) {
       return (
@@ -136,6 +169,7 @@ class SongDetailsPage extends React.Component {
           </ButtonGroup>
         </Navigation>
         {this.state.editing ? this.renderEditSong() : this.renderShowSong()}
+        {this.renderDeleteModal()}
       </div>
     );
   }
