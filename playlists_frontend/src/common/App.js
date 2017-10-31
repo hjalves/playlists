@@ -7,6 +7,7 @@ import SongDetailsPage from '../song/SongDetailsPage';
 import UserPage from '../user/UserPage';
 import NewUserPage from '../user/NewUserPage';
 import UserDetailsPage from '../user/UserDetailsPage';
+import UserSongsPage from '../user/UserSongsPage';
 
 
 const Overview = () => (
@@ -28,6 +29,7 @@ class App extends React.Component {
               <Route exact path='/users' component={UserPage}/>
               <Route exact path='/users/new' component={NewUserPage}/>
               <Route exact path='/users/:id' component={UserDetailsPage}/>
+              <Route exact path='/users/:id/songs' component={UserSongsPage}/>
             </Switch>
           </main>
         </div>

@@ -71,6 +71,7 @@ There are Postman collections available at `apitests/collections/*`.
 | DELETE | /api/v1/users/:id/        | Delete user                        |
 | GET    | /api/v1/users/:id/songs/  | Get user's favorite songs          |
 | POST   | /api/v1/users/:id/songs/  | Add favorite songs to an user      |
+| PUT    | /api/v1/users/:id/songs/  | Replace user's favorite songs      |
 | DELETE | /api/v1/users/:id/songs/  | Remove favorite songs from an user |
 
 

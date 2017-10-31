@@ -142,6 +142,7 @@ class UserDetailsPage extends React.Component {
   }
 
   renderFavoriteSongs() {
+    const userId = this.props.match.params.id;
     const songs = this.state.favoriteSongs;
     if (songs === null)
       return null;
@@ -166,7 +167,8 @@ class UserDetailsPage extends React.Component {
           {listItems}
         </ListGroup>
         <CardFooter className="border-top-0">
-          <Button color="outline-secondary" className="mr-2">
+          <Button color="outline-secondary" className="mr-2"
+                  onClick={() => this.redirectTo(`/users/${userId}/songs`)}>
             <FontAwesome name="pencil"/> Change</Button>
         </CardFooter>
       </Card>
