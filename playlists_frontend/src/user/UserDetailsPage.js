@@ -3,8 +3,9 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 import Navigation from '../common/Navigation';
-import { Button, ButtonGroup, ListGroup, ListGroupItem,
-  Card, CardBody, CardFooter, CardHeader } from 'reactstrap';
+import { Button, ButtonGroup, ListGroup, ListGroupItem, Card,
+  CardBody, CardFooter, CardHeader, Form, FormGroup, Label, Input
+} from 'reactstrap';
 
 
 class UserDetailsPage extends React.Component {
@@ -14,7 +15,9 @@ class UserDetailsPage extends React.Component {
     this.state = {
       redirectTo: null,
       user: null,
-      favoriteSongs: null,
+      editUser: null,
+      editing: false,
+      favoriteSongs: null
     };
   }
 
@@ -45,7 +48,84 @@ class UserDetailsPage extends React.Component {
     this.setState({redirectTo: location});
   };
 
-  renderFavoriteSongs = () => {
+  handleChange = (event) => {
+    let editUser = Object.assign({}, this.state.editUser);
+    editUser[event.target.name] = event.target.value;
+    this.setState({editUser});
+  };
+
+  beginEditing = (event) => {
+    let editUser = Object.assign({}, this.state.user);
+    this.setState({editUser, editing: true});
+  };
+
+  cancelEditing = (event) => {
+    this.setState({editUser: null, editing: false});
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const userId = this.props.match.params.id;
+    const user = {
+      full_name: this.state.editUser.full_name,
+      email: this.state.editUser.email,
+    };
+    axios.put(`/users/${userId}/`, user).then(
+      response => {
+        this.setState({user: response.data, editing: false, editUser: null});
+      }
+    );
+  };
+
+  renderShowUser() {
+    return (
+      <Card>
+        <ListGroup className="list-group-flush">
+          <ListGroupItem >
+            <h5>Full name</h5>
+            {this.state.user && this.state.user.full_name}
+          </ListGroupItem>
+          <ListGroupItem>
+            <h5>E-mail</h5>
+            {this.state.user && this.state.user.email}
+          </ListGroupItem>
+        </ListGroup>
+        <CardFooter className="border-top-0">
+          <Button color="outline-secondary" className="mr-2"
+                  onClick={this.beginEditing}>
+            <FontAwesome name="pencil"/> Change</Button>
+          <Button color="outline-danger">
+            <FontAwesome name="trash"/> Delete</Button>
+        </CardFooter>
+      </Card>
+    );
+  }
+
+  renderEditUser() {
+    return (
+      <Form className="edit-form" onSubmit={this.handleSubmit}>
+        <FormGroup>
+          <Label for="userName">Full name</Label>
+          <Input name="full_name" id="userName" placeholder=""
+                 value={this.state.editUser.full_name}
+                 onChange={this.handleChange}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="userEmail">E-mail</Label>
+          <Input name="email" id="userEmail" placeholder=""
+                 value={this.state.editUser.email}
+                 onChange={this.handleChange}/>
+        </FormGroup>
+        <hr/>
+        <Button color="success" className="mr-2" >
+          <FontAwesome name="check" /> Apply</Button>
+        <Button color="danger" onClick={this.cancelEditing}>
+          <FontAwesome name="times"/> Cancel</Button>
+      </Form>
+    );
+  }
+
+  renderFavoriteSongs() {
     const songs = this.state.favoriteSongs;
     if (songs === null)
       return null;
@@ -86,34 +166,13 @@ class UserDetailsPage extends React.Component {
     return (
       <div>
         <Navigation title="Users" description="User details" >
-
           <ButtonGroup>
             <Button onClick={() => this.redirectTo('/users')}>
               <FontAwesome name="arrow-left"/> Back to users</Button>
           </ButtonGroup>
-
         </Navigation>
-        <Card>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem >
-            <h5>Full name</h5>
-            {this.state.user && this.state.user.full_name}
-          </ListGroupItem>
-          <ListGroupItem>
-            <h5>E-mail</h5>
-            {this.state.user && this.state.user.email}
-          </ListGroupItem>
-        </ListGroup>
-        <CardFooter className="border-top-0">
-          <Button color="outline-secondary" className="mr-2">
-            <FontAwesome name="pencil"/> Change</Button>
-          <Button color="outline-danger">
-            <FontAwesome name="trash"/> Delete</Button>
-        </CardFooter>
-        </Card>
-
+        {this.state.editing ? this.renderEditUser() : this.renderShowUser()}
         {this.renderFavoriteSongs()}
-
       </div>
     );
   }

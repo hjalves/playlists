@@ -66,7 +66,9 @@ class NewUserPage extends React.Component {
             <Input name="full_name" id="userName" placeholder=""
                    value={this.state.full_name} onChange={this.handleChange}/>
           </FormGroup>
-          <Button color="primary">Add user</Button>
+          <hr/>
+          <Button color="primary">
+            <FontAwesome name="plus"/> Add user</Button>
         </Form>
       </div>
     );

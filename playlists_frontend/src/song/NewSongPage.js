@@ -73,7 +73,9 @@ class NewSongPage extends React.Component {
             <Input name="album" id="songAlbum" placeholder=""
                    value={this.state.album} onChange={this.handleChange}/>
           </FormGroup>
-          <Button color="primary">Add song</Button>
+          <hr/>
+          <Button color="primary">
+            <FontAwesome name="plus"/> Add song</Button>
         </Form>
       </div>
     );
