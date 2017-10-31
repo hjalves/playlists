@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
-import Navigation from './Navigation';
+import Navigation from '../common/Navigation';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 

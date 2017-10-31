@@ -5,8 +5,8 @@ import { HashRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
-import App from './App';
-import registerServiceWorker, { unregister } from './registerServiceWorker';
+import App from './common/App';
+//import registerServiceWorker from './registerServiceWorker';
 
 axios.defaults.baseURL = '/api/v1';
 
@@ -17,4 +17,3 @@ ReactDOM.render((
 ), document.getElementById('root'));
 
 //registerServiceWorker();
-unregister();

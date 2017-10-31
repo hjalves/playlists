@@ -3,36 +3,32 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
-import Navigation from './Navigation';
-import SongList from "./SongList";
+import Navigation from '../common/Navigation';
+import UserList from "./UserList";
 
-class SongPage extends React.Component {
+class UserPage extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
       loading: true,
-      songs: [],
+      users: [],
       redirectTo: null
     };
   }
 
   componentDidMount() {
-    axios.get('/songs/', {params: {limit: 1000}}).then(
+    axios.get('/users/', {params: {limit: 1000}}).then(
       response => {
-        const songs = response.data.results;
-        this.setState({ songs, loading: false });
+        const users = response.data.results;
+        this.setState({ users, loading: false });
       }
     )
   }
 
-  clickSong = (songId) => {
-    console.log(songId);
-  };
-
-  newSong = () => {
-
+  clickUser = (userId) => {
+    this.redirectTo(`/users/${userId}`);
   };
 
   redirectTo = (location) => {
@@ -54,14 +50,14 @@ class SongPage extends React.Component {
     }
     return (
       <div>
-        <Navigation title="Music" description="All songs" >
-          <Button onClick={() => this.redirectTo('/songs/new')}>
-            <FontAwesome name="plus"/> New song</Button>
+        <Navigation title="Users" description="All users" >
+          <Button onClick={() => this.redirectTo('/users/new')}>
+            <FontAwesome name="plus"/> New user</Button>
         </Navigation>
-        <SongList songs={this.state.songs} handleClick={this.clickSong}/>
+        <UserList users={this.state.users} handleClick={this.clickUser}/>
       </div>
     );
   }
 }
 
-export default SongPage;
+export default UserPage;
