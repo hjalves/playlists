@@ -89,6 +89,7 @@ DATABASES = {
         'PASSWORD': 'playlists',
         'HOST': 'localhost',
         'PORT': '',
+        'ATOMIC_REQUESTS': True
     }
 }
 

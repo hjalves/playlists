@@ -5,7 +5,7 @@ from rest_framework.test import APITestCase
 from .models import Song, User
 
 
-songs = [
+SONGS = [
     Song(title='Me And The Bean', artist='Spoon', album='Girls Can Tell'),
     Song(title='Cherry Pie', artist='Warrant', album='Cherry Pie'),
     Song(title='Eye of the Tiger', artist='Survivor', album='Rocky IV'),
@@ -59,7 +59,7 @@ songs = [
 ]
 
 
-users = [
+USERS = [
     User(email='eramos@mail.pt', full_name='Emília Ramos'),
     User(email='esousa@mail.pt', full_name='Enzo Sousa'),
     User(email='alopes@mail.pt', full_name='Artur Lopes'),
@@ -73,10 +73,10 @@ users = [
 ]
 
 
-class GetAllSongsTest(APITestCase):
+class SongsTests(APITestCase):
 
     def setUp(self):
-        Song.objects.bulk_create(songs)
+        Song.objects.bulk_create(SONGS)
 
     def test_get_all_songs(self):
         url = reverse('playlists_api:song-list')
@@ -90,11 +90,22 @@ class GetAllSongsTest(APITestCase):
         self.assertEquals(results[0]['artist'], 'Spoon')
         self.assertEquals(results[0]['album'], 'Girls Can Tell')
 
+    def test_get_some_songs(self):
+        url = reverse('playlists_api:song-list')
+        response = self.client.get(url, {'limit': '5', 'offset': '10'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 30)
+        results = response.data['results']
+        self.assertEqual(len(results), 5)
+        self.assertEquals(results[0]['title'], 'Anarchy In The UK')
+        self.assertEquals(results[0]['artist'], 'Sex Pistols')
+        self.assertEquals(results[0]['album'], "The Great Rock 'N' Roll Swindle")
 
-class GetAllUsersTest(APITestCase):
+
+class UsersTests(APITestCase):
 
     def setUp(self):
-        User.objects.bulk_create(users)
+        User.objects.bulk_create(USERS)
 
     def test_get_all_users(self):
         url = reverse('playlists_api:user-list')
@@ -106,3 +117,72 @@ class GetAllUsersTest(APITestCase):
         self.assertEqual(len(results), 10)
         self.assertEquals(results[0]['email'], 'eramos@mail.pt')
         self.assertEquals(results[0]['full_name'], 'Emília Ramos')
+
+    def test_get_some_users(self):
+        url = reverse('playlists_api:user-list')
+        response = self.client.get(url, {'limit': '2', 'offset': '4'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['count'], 10)
+        results = response.data['results']
+        self.assertEqual(len(results), 2)
+        self.assertEquals(results[0]['email'], 'evieira@mail.pt')
+        self.assertEquals(results[0]['full_name'], 'Eduarda Vieira')
+
+
+class UserSongsTests(APITestCase):
+
+    def setUp(self):
+        User.objects.bulk_create(USERS)
+        Song.objects.bulk_create(SONGS)
+
+        songs = Song.objects.filter(
+            title__in=['Me And The Bean', 'Cherry Pie', 'Eye of the Tiger']).all()
+        User.objects.get(email='eramos@mail.pt').songs.add(*songs)
+
+        songs = Song.objects.filter(
+            title__in=['Me And The Bean', 'Holiday In Cambodia']).all()
+        User.objects.get(email='esousa@mail.pt').songs.add(*songs)
+
+    def test_get_user_songs(self):
+        user_id = User.objects.get(email='eramos@mail.pt').id
+        url = reverse('playlists_api:user-songs', args=[user_id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        results = response.data
+        self.assertEqual(len(results), 3)
+        self.assertEqual(results[0]['title'], 'Me And The Bean')
+        self.assertEqual(results[1]['title'], 'Cherry Pie')
+        self.assertEqual(results[2]['title'], 'Eye of the Tiger')
+
+    def test_get_user_songs_empty(self):
+        user_id = User.objects.get(email='alopes@mail.pt').id
+        url = reverse('playlists_api:user-songs', args=[user_id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        results = response.data
+        self.assertEqual(len(results), 0)
+
+    def test_add_user_songs_already_present(self):
+        user_id = User.objects.get(email='eramos@mail.pt').id
+        songs = Song.objects.filter(
+            title__in=['Holiday In Cambodia', 'Eye of the Tiger'])
+        song_ids = [song.id for song in songs]
+
+        url = reverse('playlists_api:user-songs', args=[user_id])
+        response = self.client.post(url, data={'ids': song_ids}, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['ids'],
+                        ['At least one Song IDs already present'])
+
+    def test_add_user_songs_nonexistent(self):
+        user_id = User.objects.get(email='eramos@mail.pt').id
+        songs = Song.objects.filter(
+            title__in=['Holiday In Cambodia', 'Bohemian Rhapsody - Remastered'])
+        song_ids = [song.id for song in songs]
+        song_ids.append(50)
+        url = reverse('playlists_api:user-songs', args=[user_id])
+        response = self.client.post(url, {'ids': song_ids}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['ids'],
+                        ['Could not find at least one of the given IDs'])

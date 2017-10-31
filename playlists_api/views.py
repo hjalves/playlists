@@ -1,10 +1,10 @@
-from django.http.response import Http404
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 from .models import Song, User
-from .serializers import SongSerializer, UserSerializer
+from .serializers import SongSerializer, UserSerializer, IdsSerializer
 
 
 class SongViewSet(viewsets.ModelViewSet):
@@ -22,18 +22,36 @@ class UserViewSet(viewsets.ModelViewSet):
             user = self.get_object()
             serializer = SongSerializer(user.songs, many=True)
             return Response(serializer.data)
+
         elif request.method == 'POST':
             user = self.get_object()
-            ids = request.data['ids']   # TODO: Test if int list
-            songs = Song.objects.filter(id__in=ids)
-            if songs.count() < len(set(ids)):
-                raise Http404()
+
+            serializer = IdsSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            ids = serializer.validated_data['ids']
+
+            if Song.objects.filter(id__in=ids).count() < len(set(ids)):
+                message = "Could not find at least one of the given IDs"
+                raise ValidationError(dict(ids=[message]))
+            if user.songs.filter(id__in=ids).exists():
+                message = "At least one Song IDs already present"
+                raise ValidationError(dict(ids=[message]))
+
             user.songs.add(*ids)
             serializer = SongSerializer(user.songs, many=True)
             return Response(serializer.data)
+
         elif request.method == 'DELETE':
             user = self.get_object()
-            ids = request.data['ids']   # TODO: Test if int list
+
+            serializer = IdsSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            ids = serializer.validated_data['ids']
+
+            if user.songs.filter(id__in=ids).count() < len(set(ids)):
+                message = "Could not find at least one of the given IDs"
+                raise ValidationError(dict(ids=[message]))
+
             user.songs.remove(*ids)
             serializer = SongSerializer(user.songs, many=True)
             return Response(serializer.data)
