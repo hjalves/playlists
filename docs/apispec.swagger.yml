@@ -1,0 +1,381 @@
+# API specification using Swagger 2 (aka OpenAPI)
+# Tutorial: https://apihandyman.io/writing-openapi-swagger-specification-tutorial-part-1-introduction/
+
+swagger: '2.0'
+
+info:
+  title: Playlists API
+  description: Manage users and their favorite songs
+  version: "1.0.0"
+
+schemes:
+ - http
+ - https
+host: playlists.xor.pt
+basePath: /api/v1
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+
+
+  /songs/:
+    get:
+      summary: List all songs
+      description:
+        Returns a list of all songs with pagination support.
+      parameters:
+        - $ref: "#/parameters/limit"
+        - $ref: "#/parameters/offset"
+      tags:
+        - Songs
+      responses:
+        200:
+          description: List of songs
+          schema:
+            $ref: '#/definitions/PagedSongs'
+
+
+  /songs/{id}/:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The song's ID
+        type: integer
+    get:
+      summary: View song details
+      description:
+        Returns song details.
+      tags:
+        - Songs
+      responses:
+        200:
+          description: Song details
+          schema:
+            $ref: "#/definitions/Song"
+    put:
+      summary: Update song
+      description:
+        Change song metadata (title, artist, album)
+      parameters:
+        - name: song
+          in: body
+          required: true
+          description: Song metadata to change
+          schema:
+            $ref: '#/definitions/EditSong'
+      tags:
+        - Songs
+      responses:
+        200:
+          description: Updated song details
+          schema:
+            $ref: "#/definitions/Song"
+    delete:
+      summary: Delete song
+      description:
+        Deletes the song.
+      tags:
+        - Songs
+      responses:
+        204:
+          description: Song was deleted
+
+
+  /users/:
+    get:
+      summary: List all users
+      description: List all users with pagination support
+      parameters:
+        - $ref: "#/parameters/limit"
+        - $ref: "#/parameters/offset"
+      tags:
+        - Users
+      responses:
+        200:
+          description: All users
+          schema:
+            $ref: "#/definitions/PagedUsers"
+    post:
+      summary: Create new user
+      security: []
+      parameters:
+        - name: user
+          in: body
+          required: true
+          description: New user
+          schema:
+            $ref: "#/definitions/EditUser"
+      tags:
+        - Users
+      responses:
+        201:
+          description: Newly created user
+          schema:
+            $ref: "#/definitions/User"
+
+  /users/{id}/:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The user's ID
+        type: integer
+    get:
+      summary: View user details
+      description:
+        Returns user data.
+      tags:
+        - Users
+      responses:
+        200:
+          description: User data
+          schema:
+            $ref: "#/definitions/User"
+    put:
+      summary: Edit user account
+      description:
+        Update account details.
+      parameters:
+        - name: user
+          in: body
+          required: true
+          description: Editable account details
+          schema:
+            $ref: "#/definitions/EditUser"
+      tags:
+        - Users
+      responses:
+        200:
+          description: Account updated
+          schema:
+            $ref: "#/definitions/User"
+    delete:
+      summary: Delete user
+      description:
+        Delete user
+      tags:
+        - Users
+      responses:
+        204:
+          description: User deleted
+
+  /users/{id}/songs/:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The user's ID
+        type: integer
+    get:
+      summary: List user's favorite songs
+      description:
+        Returns user's favorite songs
+      tags:
+        - Users
+        - Songs
+      responses:
+        200:
+          description: User's favorite songs
+          schema:
+            $ref: "#/definitions/SongList"
+    post:
+      summary: Add user's favorite songs
+      description: Add songs to user's favorite songs collection
+      parameters:
+        - name: ids
+          in: body
+          required: true
+          description: List of existing song IDs
+          schema:
+            $ref: '#/definitions/IdList'
+      tags:
+        - Users
+        - Songs
+      responses:
+        200:
+          description: User's favorite songs
+          schema:
+            $ref: "#/definitions/SongList"
+    put:
+      summary: Replace user's favorite songs
+      description: Change user's favorite songs collection
+      parameters:
+        - name: ids
+          in: body
+          required: true
+          description: List of existing song IDs
+          schema:
+            $ref: '#/definitions/IdList'
+      tags:
+        - Users
+        - Songs
+      responses:
+        200:
+          description: User's favorite songs
+          schema:
+            $ref: "#/definitions/SongList"
+
+definitions:
+  Song:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      artist:
+        type: string
+      album:
+        type: string
+    additionalProperties: false
+    required:
+      - id
+      - title
+      - artist
+      - album
+
+  EditSong:
+    type: object
+    properties:
+      title:
+        type: string
+      artist:
+        type: string
+      album:
+        type: string
+    additionalProperties: false
+    required:
+      - title
+      - artist
+      - album
+
+  PartialSong:
+    type: object
+    properties:
+      title:
+        type: string
+      artist:
+        type: string
+      album:
+        type: string
+      year:
+        type: integer
+    additionalProperties: false
+
+  SongList:
+    type: array
+    items:
+      $ref: "#/definitions/Song"
+
+  IdList:
+    type: object
+    properties:
+      ids:
+        type: array
+        items:
+          type: integer
+
+  PagedSongs:
+    type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: "#/definitions/Song"
+      count:
+        type: integer
+      next:
+        type: string
+      previous:
+        type: string
+    additionalProperties: false
+    required:
+      - results
+      - count
+      - next
+      - previous
+
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      email:
+        type: string
+        format: email
+      name:
+        type: string
+      song_count:
+        type: integer
+    additionalProperties: false
+    required:
+      - id
+      - email
+      - name
+      - song_count
+
+  EditUser:
+    type: object
+    properties:
+      email:
+        type: string
+        format: email
+      full_name:
+        type: string
+    additionalProperties: false
+    required:
+      - email
+      - full_name
+
+  PartialUser:
+    type: object
+    properties:
+      email:
+        type: string
+        format: email
+      full_name:
+        type: string
+    additionalProperties: false
+
+  PagedUsers:
+    type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: "#/definitions/User"
+      count:
+        type: integer
+      next:
+        type: string
+      previous:
+        type: string
+    additionalProperties: false
+    required:
+      - results
+      - count
+      - next
+      - previous
+
+parameters:
+  limit:
+    name: limit
+    in: query
+    required: false
+    description: Maximum number of results displayed
+    type: integer
+    default: 10
+    minimum: 1
+  offset:
+    name: offset
+    in: query
+    required: false
+    description: Zero-indexed position of the first result displayed
+    type: integer
+    default: 0
+    minimum: 0

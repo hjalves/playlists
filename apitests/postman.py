@@ -28,8 +28,11 @@ def create_postman_collection(postman_yaml, name=None, data_format=None,
             description = test.get('description')
             url = base_url + test['url']
             method = test['method']
-            urlvars = test.get('url-vars')
-            # TODO: do not assume that only get methods have url params
+            urlvars = test.get('url-vars', {})
+            # Workaround: Postman have a bug with url-vars
+            for key, value in urlvars.items():
+                url = url.replace(':' + key, str(value))
+            # Assuming only GET method have url parameters (ex: ?a=b&c=b)
             params = test.get('params') if method == 'GET' else None
             data = test.get('params') if method != 'GET' else None
             json = None
@@ -39,7 +42,7 @@ def create_postman_collection(postman_yaml, name=None, data_format=None,
             headers = {}
             request = Request(name=name, description=description,
                               url=url, method=method,
-                              headers=headers, urlvars=urlvars,
+                              headers=headers,
                               params=params, data=data, json=json)
             folder.add_request(request)
 
