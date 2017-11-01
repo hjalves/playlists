@@ -4,18 +4,39 @@
 
 Web application to manage users and their favorite songs.
 
+
 ## TODO
 
 This README is a work in progress. Sections missing:
-- Features
-- Architecture and dependencies
+- Project organization
 - Configuration
-- Testing
 - Manual deployment
-- Changelog
-- License
+
+
+## Features
+
+- Manage users (with e-mail and name) and songs (title, artist, album)
+- Organize users' favorite songs
+- Web interface and RESTful API
+
+
+## Architecture and dependencies
+
+This application is composed into two main components:
+
+- **Backend**: Replies to HTTP requests (via RESTful API) and performs database
+queries. It's built with Python (3.4+), Django and Django REST Framework.
+It assumes an existing PostgreSQL instance (but it should work nicely
+with other engines, at least SQLite).
+
+- **Frontend**: User interface. It's a single-page application (SPA) 
+coded in web technologies, more specifically, ECMAScript 6, React, Bootstrap
+and axios. 
+
 
 ## Development environment
+
+### Backend (Python)
 
 To setup a development environment, clone the repository,
 install [Vagrant](https://www.vagrantup.com/),
@@ -44,6 +65,27 @@ pip install -r requirements     # Install the project dependencies
 ./scripts/populate_db.py        # Insert test data in the database
 ./manage.py runserver           # Run the development server (port 8000)
 ```
+
+### Frontend (Web)
+
+The frontend is built with [React](https://reactjs.org/). To have a working
+development environment and to build the production version 
+you need [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/).
+At the moment, the Vagrant provided does not include the required frontend
+tools.
+
+- In a console prompt (with npm available), run `cd playlists_frontend/`
+- Run `npm install` to install the dependencies
+- `npm start` starts a development server
+
+
+## Testing
+
+To run the backend tests, activate the virtual environment (see previously)
+and run `./manage.py test`.
+
+Frontend does not have any tests.
+
 
 ## RESTful API
 
@@ -77,6 +119,11 @@ There are Postman collections available at `apitests/collections/*`.
 
 ## Deployment
 
+### Frontend Production Build
+
+Run `./build-frontend.sh` to build a production version. The resulting
+artifact is copied to `www` dir (the script stages the files to git).
+
 ### AWS Elastic Beanstalk (PaaS-like)
 
 Step-by-step:
@@ -88,18 +135,13 @@ Step-by-step:
 Note: Only the git committed files (in the HEAD commit) will be deployed.
 To deploy files staged in git, use `eb deploy --staged`.
 
-## Frontend
+## FAQ
 
-The frontend is built with [React](https://reactjs.org/). To have a working
-development environment and to build the production version 
-you need [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/).
+##### Why is this even useful? 
 
-### Development environment
+This project was given to me as an exercise. 
 
-- Run `npm install` while in `playlists_frontend/` dir to install the dependencies.
-- `npm start` starts a development server
+## License
 
-### Deployment
+MIT
 
-Run `./build-frontend.sh` to build a production version. The resulting
-artifact is copied to `www` dir (the script stages the files to git).
