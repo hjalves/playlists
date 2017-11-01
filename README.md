@@ -30,8 +30,8 @@ It assumes an existing PostgreSQL instance (but it should work nicely
 with other engines, at least SQLite).
 
 - **Frontend**: User interface. It's a single-page application (SPA) 
-coded in web technologies, more specifically, ECMAScript 6, React, Bootstrap
-and axios. 
+coded in web technologies, more specifically ECMAScript 6, React, Bootstrap
+and axios. It's located on [playlists_frontend/](playlists_frontend/).
 
 
 ## Development environment
@@ -52,9 +52,9 @@ After the VM is up and running, connect it with `vagrant ssh` and:
 - `~/run-server.sh`: to run the Django development server at port 8080
 - `/vagrant/manage.py` to perform other management activities.
 
-A Python virtual environment (located at `~/venv`), with the project
-dependencies installed, is automatically activated as soon as you connect
-via ssh (via `.bashrc`). If you prefer to run the development server locally,
+A Python virtual environment (located at `~/venv`, with the project
+dependencies installed) is automatically activated as soon as you connect
+via ssh (via `.bashrc`). If you prefer running the development server locally,
 install Python 3.4+ (and virtualenv) and execute:
 
 ```bash
@@ -90,10 +90,11 @@ Frontend does not have any tests.
 ## RESTful API
 
 The API is loosely based on RESTful concepts. Both requests and responses
-should be serialized in JSON. Some error responses (with status code != 2xx)
+should be serialized in JSON. Some error responses (with status code ≠ 2xx)
 may be sent formatted as HTML. All URI end in slash `/`.
 
-There are Postman collections available at `apitests/collections/*`.
+There are Postman collections available at
+[apitests/collections/](apitests/collections/).
 
 ### Endpoints
 
@@ -137,7 +138,7 @@ To deploy files staged in git, use `eb deploy --staged`.
 
 ## FAQ
 
-##### Why is this even useful? 
+#### Why is this even useful? 
 
 This project was given to me as an exercise. 
 
