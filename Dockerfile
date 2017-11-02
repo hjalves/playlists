@@ -36,7 +36,8 @@ RUN /venv/bin/python manage.py collectstatic --noinput
 # Enable SSH
 # RUN rm -f /etc/service/sshd/down
 
-ENV DJANGO_SETTINGS_MODULE=playlists.prod_settings DB_HOST=postgres
+ENV DJANGO_SETTINGS_MODULE=playlists.prod_settings \
+    DB_HOST=postgres DB_USER=postgres DB_PASSWORD=postgres
 
 # Expose NGINX http port
 EXPOSE 80

@@ -23,17 +23,13 @@ This README is a work in progress. Sections missing:
 
 ```bash
 # Run PostgreSQL instance
-docker run --name playlists-postgres \
-    -e POSTGRES_USER=playlists \
-    -e POSTGRES_PASSWORD=playlists \
-    -d postgres:9.6
+docker run --name postgres-pl -d postgres:9.6
 
 # Run application (frontend + backend)
-docker run --link playlists-postgres:postgres \
-    -p 8080:80 \
-    -d hjalves/playlists:latest
+docker run --link postgres-pl:postgres -p 8080:80 -d hjalves/playlists:latest
 ```
 
+You should now have the application running at [http://localhost:8080]().
 
 ## Architecture and dependencies
 
@@ -137,7 +133,7 @@ There are Postman collections available at
 
 ### Frontend Production Build
 
-Run `./build-frontend.sh` to build a production version. The resulting
+Run `scripts/build-frontend.sh` to build a production version. The resulting
 artifact is copied to `www` dir (the script stages the files to git).
 
 ### AWS Elastic Beanstalk (PaaS-like)
