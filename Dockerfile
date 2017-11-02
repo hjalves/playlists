@@ -17,12 +17,9 @@ RUN apt-get update && \
   nginx \
   && rm -rf /var/lib/apt/lists/*
 
-# Create application root directory
-RUN mkdir /app/
-
 # Create environment and install requirements
-COPY requirements.txt /app/
-RUN pyvenv /venv && /venv/bin/pip install -r /app/requirements.txt
+COPY requirements.txt /tmp/
+RUN mkdir /app/ && pyvenv /venv && /venv/bin/pip install -r /tmp/requirements.txt
 
 # Copy all our files into the image.
 WORKDIR /app/
@@ -35,7 +32,7 @@ RUN /venv/bin/python manage.py collectstatic --noinput
 # RUN rm -f /etc/service/sshd/down
 
 # Install config files
-COPY config/runit/* /etc/service/
+COPY config/runit/ /etc/service/
 COPY config/nginx.conf /etc/nginx/sites-available/default
 
 # Expose NGINX http port
