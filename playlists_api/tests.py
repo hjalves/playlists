@@ -187,6 +187,14 @@ class UserSongsTests(APITestCase):
         self.assertEqual(response.data['ids'],
                         ['Could not find at least one of the given IDs'])
 
+    def test_add_user_songs_empty(self):
+        user = User.objects.get(email='eramos@mail.pt')
+        url = reverse('playlists_api:user-songs', args=[user.id])
+        response = self.client.post(url, {'ids': []}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        results = response.data
+        self.assertEqual(len(results), 3)
+
     def test_replace_user_songs(self):
         user = User.objects.get(email='eramos@mail.pt')
         songs = Song.objects.filter(title__in=['Holiday In Cambodia',
@@ -221,3 +229,10 @@ class UserSongsTests(APITestCase):
         self.assertEqual(response.data['ids'],
                         ['Could not find at least one of the given IDs'])
 
+    def test_replace_user_songs_empty(self):
+        user = User.objects.get(email='eramos@mail.pt')
+        url = reverse('playlists_api:user-songs', args=[user.id])
+        response = self.client.put(url, {'ids': []}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        results = response.data
+        self.assertEqual(len(results), 0)

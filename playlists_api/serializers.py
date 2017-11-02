@@ -18,6 +18,5 @@ class UserSerializer(serializers.ModelSerializer):
 
 class IdsSerializer(serializers.Serializer):
     ids = serializers.ListField(
-        child=serializers.IntegerField(),
-        min_length=1
+        child=serializers.IntegerField()
     )
