@@ -10,7 +10,6 @@ Web application to manage users and their favorite songs.
 This README is a work in progress. Sections missing:
 - Project organization
 - Configuration
-- Manual deployment
 
 
 ## Features
@@ -18,6 +17,24 @@ This README is a work in progress. Sections missing:
 - Manage users (with e-mail and name) and songs (title, artist, album)
 - Organize users' favorite songs
 - Web interface and RESTful API
+
+
+## Quickstart with Docker
+
+```bash
+# Run PostgreSQL instance
+docker run --name=playlists-postgres \
+    -e POSTGRES_USER=playlists \
+    -e POSTGRES_PASSWORD=playlists \
+    -d postgres:9.6
+
+# Run application
+docker run --name=playlists \
+    --link playlists-postgres:postgres \
+    -e DB_HOST=postgres \
+    -p 8888:80 \
+    -d hjalves/playlists:latest
+```
 
 
 ## Architecture and dependencies

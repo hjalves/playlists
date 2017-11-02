@@ -1,0 +1,16 @@
+.ebextensions
+.elasticbeanstalk
+.git
+.gitignore
+.vagrant
+.idea
+.travis.yml
+*.sqlite3
+*.bak
+*.log
+apitests
+docs
+playlists_frontend
+Vagrantfile
+application.py
+build-frontend.sh
