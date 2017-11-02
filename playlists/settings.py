@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'playlists.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'playlists',
-        'USER': 'playlists',
-        'PASSWORD': 'playlists',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': os.environ.get('DB_NAME', 'playlists'),
+        'USER': os.environ.get('DB_USER', 'playlists'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'playlists'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', ''),
         'ATOMIC_REQUESTS': True
     }
 }
@@ -106,6 +106,8 @@ if 'RDS_DB_NAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
+
+# Travis CI
 
 if 'TRAVIS' in os.environ:
     DATABASES = {
