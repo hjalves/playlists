@@ -217,7 +217,7 @@ LOGGING = {
         "handlers": ["console"]
     },
     "loggers": {
-        "playlist": {
+        "playlists_api": {
             "level": "DEBUG",
             "propagate": True,
         },

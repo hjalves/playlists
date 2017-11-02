@@ -19,20 +19,18 @@ This README is a work in progress. Sections missing:
 - Web interface and RESTful API
 
 
-## Quickstart with Docker
+## Docker Deployment
 
 ```bash
 # Run PostgreSQL instance
-docker run --name=playlists-postgres \
+docker run --name playlists-postgres \
     -e POSTGRES_USER=playlists \
     -e POSTGRES_PASSWORD=playlists \
     -d postgres:9.6
 
-# Run application
-docker run --name=playlists \
-    --link playlists-postgres:postgres \
-    -e DB_HOST=postgres \
-    -p 8888:80 \
+# Run application (frontend + backend)
+docker run --link playlists-postgres:postgres \
+    -p 8080:80 \
     -d hjalves/playlists:latest
 ```
 

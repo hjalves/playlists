@@ -21,6 +21,11 @@ RUN apt-get update && \
 COPY requirements.txt /tmp/
 RUN mkdir /app/ && pyvenv /venv && /venv/bin/pip install -r /tmp/requirements.txt
 
+# Install config files
+COPY config/runit/ /etc/service/
+COPY config/nginx.conf /etc/nginx/sites-available/default
+COPY config/migrate.sh /etc/my_init.d/
+
 # Copy all our files into the image.
 WORKDIR /app/
 COPY . /app/
@@ -31,9 +36,7 @@ RUN /venv/bin/python manage.py collectstatic --noinput
 # Enable SSH
 # RUN rm -f /etc/service/sshd/down
 
-# Install config files
-COPY config/runit/ /etc/service/
-COPY config/nginx.conf /etc/nginx/sites-available/default
+ENV DJANGO_SETTINGS_MODULE=playlists.prod_settings DB_HOST=postgres
 
 # Expose NGINX http port
 EXPOSE 80
