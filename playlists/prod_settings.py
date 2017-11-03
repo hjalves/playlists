@@ -7,6 +7,15 @@ from .settings import *
 # Disable debug mode
 DEBUG = False
 
+# Restrict allowed hosts
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'playlists.eu-west-2.elasticbeanstalk.com',
+    'playlists.ml',
+    'playlists.xor.pt'
+]
+
 # Production logging is at level INFO or WARNING
 LOGGING['handlers']['console']['level'] = 'INFO'
 

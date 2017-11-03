@@ -19,7 +19,11 @@ This README is a work in progress. Sections missing:
 - Web interface and RESTful API
 
 
-## Docker Deployment
+## Deployment
+
+### Docker
+
+Note: This method uses link which is a deprecated way of connecting containers.
 
 ```bash
 # Run PostgreSQL instance
@@ -29,7 +33,8 @@ docker run --name postgres-pl -d postgres:9.6
 docker run --link postgres-pl:postgres -p 8080:80 -d hjalves/playlists:latest
 ```
 
-You should now have the application running at [http://localhost:8080]().
+You should now have the application running at 
+[http://localhost:8080](http://localhost:8080).
 
 ## Architecture and dependencies
 
@@ -101,8 +106,8 @@ Frontend does not have any tests.
 ## RESTful API
 
 The API is loosely based on RESTful concepts. Both requests and responses
-should be serialized in JSON. Some error responses (with status code ≠ 2xx)
-may be sent formatted as HTML. All URI end in slash `/`.
+should be serialized and expected in JSON format. Some error responses
+(with status code ≠ 2xx) may be sent as HTML. All URI end in slash `/`.
 
 There are Postman collections available at
 [apitests/collections/](apitests/collections/).
