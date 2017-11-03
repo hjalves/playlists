@@ -13,7 +13,8 @@ ALLOWED_HOSTS = [
     'localhost',
     'playlists.eu-west-2.elasticbeanstalk.com',
     'playlists.ml',
-    'playlists.xor.pt'
+    'playlists.xor.pt',
+    'playlists-app.herokuapp.com'
 ]
 
 # Production logging is at level INFO or WARNING
