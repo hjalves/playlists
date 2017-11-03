@@ -5,11 +5,11 @@
 Web application to manage users and their favorite songs.
 
 
-## TODO
+#### Demo instance
 
-This README is a work in progress. Sections missing:
-- Project organization
-- Configuration
+The following server is automatically deployed from the master branch:
+
+> https://playlists-app.herokuapp.com
 
 
 ## Features
@@ -17,12 +17,6 @@ This README is a work in progress. Sections missing:
 - Manage users (with e-mail and name) and songs (title, artist, album)
 - Organize users' favorite songs
 - Web interface and RESTful API
-
-### Demo instance
-
-The following server is automatically deployed from the master branch:
-
-> https://playlists-app.herokuapp.com
 
 ## Deployment
 
@@ -38,10 +32,9 @@ docker run --name postgres-pl -d postgres:9.6
 docker run --link postgres-pl:postgres -p 8080:80 -d hjalves/playlists:latest
 ```
 
-### Frontend build script
+### Heroku
 
-Run `scripts/build-frontend.sh` to build a production version. The resulting
-artifact is copied to `www` dir (the script stages the files to git).
+This project includes a Procfile for Heroku deployments. 
 
 ### AWS Elastic Beanstalk (PaaS-like)
 
@@ -117,6 +110,8 @@ tools.
 - Run `npm install` to install the dependencies
 - `npm start` starts a development server
 
+When you want to commit or deploy, run `scripts/build-frontend.sh` on repository
+root directory. The compiled HTML/CSS/JS files are placed into `www/` dir.
 
 ## Testing
 

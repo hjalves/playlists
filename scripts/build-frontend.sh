@@ -11,4 +11,3 @@ npm run build
 # Install
 cd ../
 cp -v -r playlists_frontend/build/* www/
-git add www/

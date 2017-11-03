@@ -1,2 +1,2 @@
 release: python manage.py migrate --noinput
-web: gunicorn playlists.wsgi --log-file -
+web: gunicorn -e DJANGO_SETTINGS_MODULE=playlists.prod_settings playlists.wsgi --log-file -
