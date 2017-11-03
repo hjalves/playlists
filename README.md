@@ -18,6 +18,11 @@ This README is a work in progress. Sections missing:
 - Organize users' favorite songs
 - Web interface and RESTful API
 
+### Demo instance
+
+The following server is automatically deployed from the master branch:
+
+> https://playlists-app.herokuapp.com
 
 ## Deployment
 
@@ -33,8 +38,26 @@ docker run --name postgres-pl -d postgres:9.6
 docker run --link postgres-pl:postgres -p 8080:80 -d hjalves/playlists:latest
 ```
 
+### Frontend build script
+
+Run `scripts/build-frontend.sh` to build a production version. The resulting
+artifact is copied to `www` dir (the script stages the files to git).
+
+### AWS Elastic Beanstalk (PaaS-like)
+
+Step-by-step:
+
+- On project root, run: `eb init -p python3.4 <application_name>`
+- Create an environment with: `eb create <environment_name>`
+- Deploy project with: `eb deploy`
+
+Note: Only the git committed files (in the HEAD commit) will be deployed.
+To deploy files staged in git, use `eb deploy --staged`.
+
+
 You should now have the application running at 
 [http://localhost:8080](http://localhost:8080).
+
 
 ## Architecture and dependencies
 
@@ -133,24 +156,6 @@ There are Postman collections available at
 | PUT    | /api/v1/users/:id/songs/  | Replace user's favorite songs      |
 | DELETE | /api/v1/users/:id/songs/  | Remove favorite songs from an user |
 
-
-## Deployment
-
-### Frontend Production Build
-
-Run `scripts/build-frontend.sh` to build a production version. The resulting
-artifact is copied to `www` dir (the script stages the files to git).
-
-### AWS Elastic Beanstalk (PaaS-like)
-
-Step-by-step:
-
-- On project root, run: `eb init -p python3.4 <application_name>`
-- Create an environment with: `eb create <environment_name>`
-- Deploy project with: `eb deploy`
-
-Note: Only the git committed files (in the HEAD commit) will be deployed.
-To deploy files staged in git, use `eb deploy --staged`.
 
 ## FAQ
 
